@@ -11,10 +11,10 @@
   "environment": "client",
   "entrypoints": {
     "client": [
-      "eternal.inventoryhud.client.InventoryhudClient"
+      "eternal.inventoryhud.client.InventoryHudClient"
     ],
     "main": [
-      "eternal.inventoryhud.Inventoryhud"
+      "eternal.inventoryhud.InventoryHud"
     ]
   },
   "mixins": [
