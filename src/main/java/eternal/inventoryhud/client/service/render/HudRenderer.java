@@ -5,6 +5,7 @@ import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.resources.Identifier;
+import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.HumanoidArm;
 import net.minecraft.world.entity.player.Player;
@@ -31,24 +32,28 @@ public class HudRenderer implements IMinecraft {
     }
 
     public void extractRenderState(final GuiGraphicsExtractor graphics, final DeltaTracker deltaTracker) {
-        Player player = client.player;
-        if (player != null) {
+        if (client.player != null) {
             int totemCount = getTotemCount();
-            int armorX = getArmorHotbarX(graphics.guiWidth(), player.getMainArm(), totemCount > 0);
+            int armorX = getArmorHotbarX(graphics.guiWidth(), client.player.getMainArm(), totemCount > 0);
 
-            this.extractTotem(graphics, player, totemCount);
-            this.extractArmorHotbar(graphics, deltaTracker, player, armorX);
+            this.extractTotem(graphics, totemCount);
+            this.extractArmorHotbar(graphics, deltaTracker, armorX);
         }
     }
 
-    private void extractTotem(final GuiGraphicsExtractor graphics, final Player player, final int count) {
+    public void extractEffectLevel(final GuiGraphicsExtractor graphics, final MobEffectInstance effect, final int x, final int y) {
+        String level = Integer.toString(effect.getAmplifier() + 1);
+        graphics.text(client.font, level, x + 22 - client.font.width(level), y + 14, 0xFFFFFFFF, true);
+    }
+
+    private void extractTotem(GuiGraphicsExtractor graphics, final int count) {
         if (count > 0) {
             int screenCenter = graphics.guiWidth() / 2;
             int y = graphics.guiHeight() - 23;
             int itemY = graphics.guiHeight() - 19;
             int itemX;
 
-            if (player.getMainArm() == HumanoidArm.RIGHT) {
+            if (client.player.getMainArm() == HumanoidArm.RIGHT) {
                 graphics.blitSprite(RenderPipelines.GUI_TEXTURED, HOTBAR_OFFHAND_RIGHT_SPRITE, screenCenter + 91, y, 29, 24);
                 itemX = screenCenter + 101;
             } else {
@@ -57,12 +62,12 @@ public class HudRenderer implements IMinecraft {
             }
 
             ItemStack itemStack = new ItemStack(Items.TOTEM_OF_UNDYING);
-            graphics.item(player, itemStack, itemX, itemY, 10);
+            graphics.item(client.player, itemStack, itemX, itemY, 10);
             graphics.itemDecorations(client.font, itemStack, itemX, itemY, Integer.toString(count));
         }
     }
 
-    private void extractArmorHotbar(final GuiGraphicsExtractor graphics, final DeltaTracker deltaTracker, final Player player, final int x) {
+    private void extractArmorHotbar(final GuiGraphicsExtractor graphics, final DeltaTracker deltaTracker, final int x) {
         int y = graphics.guiHeight() - 22;
         graphics.blitSprite(RenderPipelines.GUI_TEXTURED, HOTBAR_SPRITE, 182, 22, 0, 0, x, y, 61, 22);
         graphics.blitSprite(RenderPipelines.GUI_TEXTURED, HOTBAR_SPRITE, 182, 22, 161, 0, x + 61, y, 21, 22);
@@ -72,8 +77,8 @@ public class HudRenderer implements IMinecraft {
         for (int i = 0; i < ARMOR_SLOTS.length; ++i) {
             int itemX = x + i * 20 + 3;
             int itemY = graphics.guiHeight() - 19;
-            ItemStack itemStack = player.getItemBySlot(ARMOR_SLOTS[i]);
-            this.slotExtractor.extractSlot(graphics, itemX, itemY, deltaTracker, player, itemStack, seed++);
+            ItemStack itemStack = client.player.getItemBySlot(ARMOR_SLOTS[i]);
+            this.slotExtractor.extractSlot(graphics, itemX, itemY, deltaTracker, client.player, itemStack, seed++);
         }
     }
 
