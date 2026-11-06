@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "id": "inventoryhud-",
+  "version": "${version}",
+  "name": "Inventory Hud -",
+  "description": "",
+  "authors": [],
+  "contact": {},
+  "license": "All-Rights-Reserved",
+  "icon": "assets/inventoryhud-/icon.png",
+  "environment": "client",
+  "entrypoints": {
+    "client": [
+      "eternal.inventoryhud.client.InventoryhudClient"
+    ],
+    "main": [
+      "eternal.inventoryhud.Inventoryhud"
+    ]
+  },
+  "mixins": [
+    "inventoryhud-.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=${loader_version}",
+    "minecraft": "${minecraft_version}"
+  }
+}
