@@ -6,7 +6,10 @@
   "mixins": [
   ],
   "client": [
-    "gui.HudMixin"
+    "gui.HudMixin",
+    "gui.GuiGraphicsExtractorMixin",
+    "item.ItemCooldownsAccessor",
+    "item.CooldownInstanceAccessor"
   ],
   "injectors": {
     "defaultRequire": 1

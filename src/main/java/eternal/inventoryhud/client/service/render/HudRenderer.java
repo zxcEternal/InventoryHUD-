@@ -1,6 +1,8 @@
 package eternal.inventoryhud.client.service.render;
 
 import eternal.inventoryhud.client.service.IMinecraft;
+import eternal.inventoryhud.injection.mixin.item.CooldownInstanceAccessor;
+import eternal.inventoryhud.injection.mixin.item.ItemCooldownsAccessor;
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.renderer.RenderPipelines;
@@ -9,8 +11,11 @@ import net.minecraft.world.effect.MobEffectInstance;
 import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.HumanoidArm;
 import net.minecraft.world.entity.player.Player;
+import net.minecraft.world.item.ItemCooldowns;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
+
+import java.util.Locale;
 
 public class HudRenderer implements IMinecraft {
 
@@ -27,11 +32,11 @@ public class HudRenderer implements IMinecraft {
 
     private final SlotExtractor slotExtractor;
 
-    public HudRenderer(final SlotExtractor slotExtractor) {
+    public HudRenderer(SlotExtractor slotExtractor) {
         this.slotExtractor = slotExtractor;
     }
 
-    public void extractRenderState(final GuiGraphicsExtractor graphics, final DeltaTracker deltaTracker) {
+    public void extractRenderState(GuiGraphicsExtractor graphics, DeltaTracker deltaTracker) {
         if (client.player != null) {
             int totemCount = getTotemCount();
             int armorX = getArmorHotbarX(graphics.guiWidth(), client.player.getMainArm(), totemCount > 0);
@@ -41,12 +46,25 @@ public class HudRenderer implements IMinecraft {
         }
     }
 
-    public void extractEffectLevel(final GuiGraphicsExtractor graphics, final MobEffectInstance effect, final int x, final int y) {
+    public void extractEffectLevel(GuiGraphicsExtractor graphics, MobEffectInstance effect, int x, int y) {
         String level = Integer.toString(effect.getAmplifier() + 1);
         graphics.text(client.font, level, x + 22 - client.font.width(level), y + 14, 0xFFFFFFFF, true);
     }
 
-    private void extractTotem(GuiGraphicsExtractor graphics, final int count) {
+    public void extractItemCooldown(GuiGraphicsExtractor graphics, ItemStack itemStack, int x, int y) {
+        if (client.player == null || itemStack.isEmpty()) return;
+
+        ItemCooldowns cooldowns = client.player.getCooldowns();
+        if (!cooldowns.isOnCooldown(itemStack) || !(cooldowns instanceof ItemCooldownsAccessor accessor)) return;
+
+        Identifier group = cooldowns.getCooldownGroup(itemStack);
+        if (!(accessor.cooldowns().get(group) instanceof CooldownInstanceAccessor entry)) return;
+
+        String time = formatCooldown((entry.getEndTime() - accessor.tickCount()) / 20.0f);
+        graphics.text(client.font, time, x + 17 - client.font.width(time), y, 0xFFFFFFFF, true);
+    }
+
+    private void extractTotem(GuiGraphicsExtractor graphics, int count) {
         if (count > 0) {
             int screenCenter = graphics.guiWidth() / 2;
             int y = graphics.guiHeight() - 23;
@@ -67,7 +85,7 @@ public class HudRenderer implements IMinecraft {
         }
     }
 
-    private void extractArmorHotbar(final GuiGraphicsExtractor graphics, final DeltaTracker deltaTracker, final int x) {
+    private void extractArmorHotbar(GuiGraphicsExtractor graphics, DeltaTracker deltaTracker, int x) {
         int y = graphics.guiHeight() - 22;
         graphics.blitSprite(RenderPipelines.GUI_TEXTURED, HOTBAR_SPRITE, 182, 22, 0, 0, x, y, 61, 22);
         graphics.blitSprite(RenderPipelines.GUI_TEXTURED, HOTBAR_SPRITE, 182, 22, 161, 0, x + 61, y, 21, 22);
@@ -82,7 +100,7 @@ public class HudRenderer implements IMinecraft {
         }
     }
 
-    public int getAttackIndicatorX(final int fallback) {
+    public int getAttackIndicatorX(int fallback) {
         if (client.player != null) {
             int screenWidth = client.getWindow().getGuiScaledWidth();
             int armorX = getArmorHotbarX(screenWidth, client.player.getMainArm(), getTotemCount() > 0);
@@ -97,7 +115,7 @@ public class HudRenderer implements IMinecraft {
         }
     }
 
-    private static int getArmorHotbarX(final int screenWidth, final HumanoidArm mainArm, final boolean hasTotems) {
+    private static int getArmorHotbarX(int screenWidth, HumanoidArm mainArm, boolean hasTotems) {
         int screenCenter = screenWidth / 2;
         int totemWidth = hasTotems ? 29 : 0;
 
@@ -123,6 +141,13 @@ public class HudRenderer implements IMinecraft {
         }
 
         return count;
+    }
+
+    private static String formatCooldown(float seconds) {
+        if (seconds < 1.0f) {
+            return String.format(Locale.ROOT, "%.1f", seconds);
+        }
+        return String.valueOf((int) Math.ceil(seconds));
     }
 
     @FunctionalInterface

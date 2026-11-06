@@ -47,9 +47,7 @@ public abstract class HudMixin {
     }
 
     @Inject(method = "extractEffects", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/GuiGraphicsExtractor;blitSprite(Lcom/mojang/renderpearl/api/pipeline/RenderPipeline;Lnet/minecraft/resources/Identifier;IIIII)V", shift = At.Shift.AFTER))
-    private void extractEffectLevel(final GuiGraphicsExtractor graphics, final DeltaTracker deltaTracker, final CallbackInfo ci,
-                                    @Local(name = "instance") final MobEffectInstance effect,
-                                    @Local(name = "x") final int x, @Local(name = "y") final int y) {
+    private void extractEffectLevel(final GuiGraphicsExtractor graphics, final DeltaTracker deltaTracker, final CallbackInfo ci, @Local(name = "instance") final MobEffectInstance effect, @Local(name = "x") final int x, @Local(name = "y") final int y) {
         this.hudRenderer.extractEffectLevel(graphics, effect, x, y);
     }
 
