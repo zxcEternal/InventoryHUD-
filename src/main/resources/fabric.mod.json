@@ -1,27 +1,28 @@
 {
   "schemaVersion": 1,
-  "id": "inventoryhud-",
+  "id": "inventory-hud-minus",
   "version": "${version}",
-  "name": "Inventory Hud-",
+  "name": "Inventory Hud Minus",
   "description": "",
-  "authors": ["zxcEternal"],
+  "authors": [],
   "contact": {},
   "license": "All-Rights-Reserved",
-  "icon": "assets/inventoryhud-/icon.png",
+  "icon": "assets/inventory-hud-minus/icon.png",
   "environment": "client",
   "entrypoints": {
     "client": [
-      "eternal.inventoryhud.client.InventoryHudClient"
+      "eternal.inventory.client.MainClient"
     ],
     "main": [
-      "eternal.inventoryhud.InventoryHud"
+      "eternal.inventory.Main"
     ]
   },
   "mixins": [
-    "inventoryhud-.mixins.json"
+    "inventory-hud-minus.mixins.json"
   ],
   "depends": {
     "fabricloader": ">=${loader_version}",
+    "fabric-api": "*",
     "minecraft": "${minecraft_version}"
   }
 }

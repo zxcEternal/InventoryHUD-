@@ -1,4 +1,4 @@
-package eternal.inventoryhud.injection.mixin.item;
+package eternal.inventory.mixin.item;
 
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.ItemCooldowns;

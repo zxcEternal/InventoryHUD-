@@ -1,8 +1,8 @@
-package eternal.inventoryhud;
+package eternal.inventory;
 
 import net.fabricmc.api.ModInitializer;
 
-public class InventoryHud implements ModInitializer {
+public class Main implements ModInitializer {
 
     @Override
     public void onInitialize() {

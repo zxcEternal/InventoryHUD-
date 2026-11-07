@@ -1,4 +1,4 @@
-package eternal.inventoryhud.client.service;
+package eternal.inventory.client;
 
 import net.minecraft.client.Minecraft;
 

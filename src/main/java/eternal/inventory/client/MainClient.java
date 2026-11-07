@@ -1,8 +1,8 @@
-package eternal.inventoryhud.client;
+package eternal.inventory.client;
 
 import net.fabricmc.api.ClientModInitializer;
 
-public class InventoryHudClient implements ClientModInitializer {
+public class MainClient implements ClientModInitializer {
 
     @Override
     public void onInitializeClient() {
