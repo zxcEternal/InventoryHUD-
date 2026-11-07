@@ -1,24 +1,24 @@
 {
   "schemaVersion": 1,
-  "id": "inventory-hud-minus",
+  "id": "inventoryhud-",
   "version": "${version}",
-  "name": "Inventory Hud Minus",
+  "name": "InventoryHud-",
   "description": "",
   "authors": [],
   "contact": {},
   "license": "All-Rights-Reserved",
-  "icon": "assets/inventory-hud-minus/icon.png",
+  "icon": "assets/inventoryhud-/icon.png",
   "environment": "client",
   "entrypoints": {
     "client": [
-      "eternal.inventory.client.MainClient"
+      "eternal.inventoryhud.client.MainClient"
     ],
     "main": [
-      "eternal.inventory.Main"
+      "eternal.inventoryhud.Main"
     ]
   },
   "mixins": [
-    "inventory-hud-minus.mixins.json"
+    "inventoryhud-.mixins.json"
   ],
   "depends": {
     "fabricloader": ">=${loader_version}",

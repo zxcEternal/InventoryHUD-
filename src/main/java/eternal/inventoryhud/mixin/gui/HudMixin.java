@@ -1,8 +1,8 @@
-package eternal.inventory.mixin.gui;
+package eternal.inventoryhud.mixin.gui;
 
-import eternal.inventory.client.render.ArmorRenderer;
-import eternal.inventory.client.render.PotionRenderer;
-import eternal.inventory.client.render.TotemRenderer;
+import eternal.inventoryhud.client.render.ArmorRenderer;
+import eternal.inventoryhud.client.render.PotionRenderer;
+import eternal.inventoryhud.client.render.TotemRenderer;
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.Hud;

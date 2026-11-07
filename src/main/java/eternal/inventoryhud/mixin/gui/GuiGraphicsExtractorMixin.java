@@ -1,6 +1,6 @@
-package eternal.inventory.mixin.gui;
+package eternal.inventoryhud.mixin.gui;
 
-import eternal.inventory.client.render.CooldownRenderer;
+import eternal.inventoryhud.client.render.CooldownRenderer;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.world.item.ItemStack;
 import org.spongepowered.asm.mixin.Mixin;

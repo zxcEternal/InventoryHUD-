@@ -1,8 +1,8 @@
-package eternal.inventory.client.render;
+package eternal.inventoryhud.client.render;
 
-import eternal.inventory.client.IMinecraft;
-import eternal.inventory.mixin.item.CooldownInstanceAccessor;
-import eternal.inventory.mixin.item.ItemCooldownsAccessor;
+import eternal.inventoryhud.client.IMinecraft;
+import eternal.inventoryhud.mixin.item.CooldownInstanceAccessor;
+import eternal.inventoryhud.mixin.item.ItemCooldownsAccessor;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.ItemCooldowns;

@@ -1,6 +1,6 @@
-package eternal.inventory.client.render;
+package eternal.inventoryhud.client.render;
 
-import eternal.inventory.client.IMinecraft;
+import eternal.inventoryhud.client.IMinecraft;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.resources.Identifier;

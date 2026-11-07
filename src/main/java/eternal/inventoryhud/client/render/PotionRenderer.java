@@ -1,6 +1,6 @@
-package eternal.inventory.client.render;
+package eternal.inventoryhud.client.render;
 
-import eternal.inventory.client.IMinecraft;
+import eternal.inventoryhud.client.IMinecraft;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.Hud;
 import net.minecraft.client.renderer.RenderPipelines;
@@ -12,7 +12,7 @@ import java.util.Locale;
 
 public class PotionRenderer implements IMinecraft {
 
-    private static final Identifier BACKGROUND = Identifier.fromNamespaceAndPath("inventory-hud-minus", "textures/potion_background.png");
+    private static final Identifier BACKGROUND = Identifier.fromNamespaceAndPath("inventoryhud-", "textures/potion_background.png");
 
     private static final int WIDTH = 36;
     private static final int HEIGHT = 38;

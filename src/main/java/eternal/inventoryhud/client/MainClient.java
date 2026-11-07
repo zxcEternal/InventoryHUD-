@@ -1,4 +1,4 @@
-package eternal.inventory.client;
+package eternal.inventoryhud.client;
 
 import net.fabricmc.api.ClientModInitializer;
 
