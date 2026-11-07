@@ -1,6 +1,7 @@
 package eternal.inventoryhud.mixin.gui;
 
 import eternal.inventoryhud.client.render.CooldownRenderer;
+import eternal.inventoryhud.client.MainClient;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.world.item.ItemStack;
 import org.spongepowered.asm.mixin.Mixin;
@@ -16,6 +17,8 @@ public abstract class GuiGraphicsExtractorMixin {
 
     @Inject(method = "itemCooldown(Lnet/minecraft/world/item/ItemStack;II)V", at = @At("TAIL"))
     private void itemCooldown(final ItemStack itemStack, final int x, final int y, final CallbackInfo ci) {
-        this.cooldownRenderer.extract((GuiGraphicsExtractor) (Object) this, itemStack, x, y);
+        if (MainClient.config.isCooldownEnabled()) {
+            this.cooldownRenderer.extract((GuiGraphicsExtractor) (Object) this, itemStack, x, y);
+        }
     }
 }

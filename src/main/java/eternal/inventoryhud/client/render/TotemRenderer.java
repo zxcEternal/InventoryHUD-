@@ -1,6 +1,7 @@
 package eternal.inventoryhud.client.render;
 
 import eternal.inventoryhud.client.IMinecraft;
+import eternal.inventoryhud.client.MainClient;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.resources.Identifier;
@@ -38,7 +39,10 @@ public class TotemRenderer implements IMinecraft {
     }
 
     public static boolean hasTotems() {
-        return client.player != null && getCount() > 0;
+        return client.player != null
+                && MainClient.config != null
+                && MainClient.config.isTotemEnabled()
+                && getCount() > 0;
     }
 
     private static int getCount() {

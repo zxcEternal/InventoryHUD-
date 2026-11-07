@@ -1,0 +1,9 @@
+{
+  "key.category.inventoryhud-.main": "InventoryHUD-",
+  "key.inventoryhud-.open_config": "Open InventoryHUD- settings",
+  "screen.inventoryhud-.config": "InventoryHUD- settings",
+  "button.inventoryhud-.armor": "Armor: %s",
+  "button.inventoryhud-.cooldown": "Cooldown: %s",
+  "button.inventoryhud-.potions": "Potions: %s",
+  "button.inventoryhud-.totem": "Totems: %s"
+}

@@ -3,6 +3,7 @@ package eternal.inventoryhud.mixin.gui;
 import eternal.inventoryhud.client.render.ArmorRenderer;
 import eternal.inventoryhud.client.render.PotionRenderer;
 import eternal.inventoryhud.client.render.TotemRenderer;
+import eternal.inventoryhud.client.MainClient;
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.Hud;
@@ -38,14 +39,21 @@ public abstract class HudMixin {
 
     @Inject(method = "extractItemHotbar", at = @At("TAIL"))
     private void extractItemHotbar(GuiGraphicsExtractor graphics, DeltaTracker deltaTracker, CallbackInfo ci) {
-        this.armorRenderer.extract(graphics, deltaTracker);
-        this.totemRenderer.extract(graphics);
+        if (MainClient.config.isArmorEnabled()) {
+            this.armorRenderer.extract(graphics, deltaTracker);
+        }
+
+        if (MainClient.config.isTotemEnabled()) {
+            this.totemRenderer.extract(graphics);
+        }
     }
 
     @Inject(method = "extractEffects", at = @At("HEAD"), cancellable = true)
     private void extractEffects(GuiGraphicsExtractor graphics, DeltaTracker deltaTracker, CallbackInfo ci) {
-        this.potionRenderer.extract(graphics);
-        ci.cancel();
+        if (MainClient.config.isPotionEnabled()) {
+            this.potionRenderer.extract(graphics);
+            ci.cancel();
+        }
     }
 
     @ModifyArgs(method = "extractItemHotbar", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/GuiGraphicsExtractor;blitSprite(Lcom/mojang/renderpearl/api/pipeline/RenderPipeline;Lnet/minecraft/resources/Identifier;IIII)V"))
