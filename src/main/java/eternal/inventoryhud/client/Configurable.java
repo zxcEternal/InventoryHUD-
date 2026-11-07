@@ -1,24 +1,24 @@
 package eternal.inventoryhud.client;
 
-import com.typesafe.config.Config;
-import com.typesafe.config.ConfigFactory;
-import com.typesafe.config.ConfigRenderOptions;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 import net.fabricmc.loader.api.FabricLoader;
 
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.StandardCopyOption;
 import java.nio.file.StandardOpenOption;
-import java.util.LinkedHashMap;
-import java.util.Map;
 
 public final class Configurable implements AutoCloseable {
-    private static final ConfigRenderOptions RENDER_OPTIONS = ConfigRenderOptions.defaults()
-            .setOriginComments(false)
-            .setComments(true)
-            .setFormatted(true)
-            .setJson(false);
+    private static final Gson GSON = new GsonBuilder()
+            .setPrettyPrinting()
+            .disableHtmlEscaping()
+            .create();
 
     private final Path configFile;
     private boolean dirty;
@@ -30,7 +30,7 @@ public final class Configurable implements AutoCloseable {
 
     public Configurable() {
         Path configDir = FabricLoader.getInstance().getConfigDir().resolve("inventoryhud-");
-        this.configFile = configDir.resolve("default.conf");
+        this.configFile = configDir.resolve("default.json");
         try {
             Files.createDirectories(configDir);
         } catch (IOException exception) {
@@ -45,19 +45,31 @@ public final class Configurable implements AutoCloseable {
         }
 
         try {
-            Config config = ConfigFactory.parseFile(configFile.toFile());
-            armorEnabled = getBoolean(config, "elements.armor", armorEnabled);
-            cooldownEnabled = getBoolean(config, "elements.cooldown", cooldownEnabled);
-            potionEnabled = getBoolean(config, "elements.potions", potionEnabled);
-            totemEnabled = getBoolean(config, "elements.totem", totemEnabled);
+            String jsonContent = Files.readString(configFile, StandardCharsets.UTF_8);
+            JsonElement parsed = JsonParser.parseString(jsonContent);
+
+            if (parsed.isJsonObject()) {
+                JsonObject root = parsed.getAsJsonObject();
+                JsonObject elements = root.has("elements") && root.get("elements").isJsonObject()
+                        ? root.getAsJsonObject("elements")
+                        : new JsonObject();
+
+                armorEnabled = getBoolean(elements, "armor", armorEnabled);
+                cooldownEnabled = getBoolean(elements, "cooldown", cooldownEnabled);
+                potionEnabled = getBoolean(elements, "potions", potionEnabled);
+                totemEnabled = getBoolean(elements, "totem", totemEnabled);
+            }
             dirty = false;
         } catch (Exception exception) {
             System.err.println("[InventoryHUD-] Failed to load config: " + exception.getMessage());
         }
     }
 
-    private static boolean getBoolean(Config config, String path, boolean fallback) {
-        return config.hasPath(path) ? config.getBoolean(path) : fallback;
+    private static boolean getBoolean(JsonObject object, String key, boolean fallback) {
+        if (object.has(key) && object.get(key).isJsonPrimitive() && object.get(key).getAsJsonPrimitive().isBoolean()) {
+            return object.get(key).getAsBoolean();
+        }
+        return fallback;
     }
 
     public boolean isArmorEnabled() {
@@ -95,21 +107,25 @@ public final class Configurable implements AutoCloseable {
     }
 
     public void saveConfig() {
-        Map<String, Object> elements = new LinkedHashMap<>();
+        JsonObject elements = new JsonObject();
+        elements.addProperty("armor", armorEnabled);
+        elements.addProperty("cooldown", cooldownEnabled);
+        elements.addProperty("potions", potionEnabled);
+        elements.addProperty("totem", totemEnabled);
 
-        elements.put("armor", armorEnabled);
-        elements.put("cooldown", cooldownEnabled);
-        elements.put("potions", potionEnabled);
-        elements.put("totem", totemEnabled);
-
-        Map<String, Object> root = new LinkedHashMap<>();
-        root.put("elements", elements);
+        JsonObject root = new JsonObject();
+        root.add("elements", elements);
 
         try {
-            Config config = ConfigFactory.parseMap(root);
             Path temporary = configFile.resolveSibling(configFile.getFileName() + ".tmp");
 
-            Files.writeString(temporary, config.root().render(RENDER_OPTIONS), StandardOpenOption.CREATE, StandardOpenOption.TRUNCATE_EXISTING);
+            Files.writeString(
+                    temporary,
+                    GSON.toJson(root),
+                    StandardCharsets.UTF_8,
+                    StandardOpenOption.CREATE,
+                    StandardOpenOption.TRUNCATE_EXISTING
+            );
             Files.move(temporary, configFile, StandardCopyOption.REPLACE_EXISTING);
 
             dirty = false;
