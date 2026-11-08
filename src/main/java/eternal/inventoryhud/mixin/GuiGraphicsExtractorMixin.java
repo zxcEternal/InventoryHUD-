@@ -1,11 +1,10 @@
-package eternal.inventoryhud.mixin.gui;
+package eternal.inventoryhud.mixin;
 
-import eternal.inventoryhud.client.render.CooldownRenderer;
 import eternal.inventoryhud.client.MainClient;
+import eternal.inventoryhud.client.render.Cooldown;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.world.item.ItemStack;
 import org.spongepowered.asm.mixin.Mixin;
-import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -13,12 +12,8 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 @Mixin(GuiGraphicsExtractor.class)
 public abstract class GuiGraphicsExtractorMixin {
 
-    @Unique private final CooldownRenderer cooldownRenderer = new CooldownRenderer();
-
     @Inject(method = "itemCooldown(Lnet/minecraft/world/item/ItemStack;II)V", at = @At("TAIL"))
-    private void itemCooldown(final ItemStack itemStack, final int x, final int y, final CallbackInfo ci) {
-        if (MainClient.config.isCooldownEnabled()) {
-            this.cooldownRenderer.extract((GuiGraphicsExtractor) (Object) this, itemStack, x, y);
-        }
+    private void itemCooldown(ItemStack itemStack, int x, int y, CallbackInfo ci) {
+        if (MainClient.config.isCooldownEnabled()) Cooldown.extract((GuiGraphicsExtractor) (Object) this, itemStack, x, y);
     }
 }

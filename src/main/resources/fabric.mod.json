@@ -4,7 +4,7 @@
   "version": "${version}",
   "name": "InventoryHUD-",
   "description": "",
-  "authors": [],
+  "authors": ["zxcEternal"],
   "contact": {},
   "license": "All-Rights-Reserved",
   "icon": "assets/inventoryhud-/icon.png",
@@ -22,6 +22,7 @@
   ],
   "depends": {
     "fabricloader": ">=${loader_version}",
+    "fabric-language-kotlin": ">=${kotlin_loader_version}",
     "fabric-api": "*",
     "minecraft": "${minecraft_version}"
   }

@@ -5,5 +5,5 @@
   "button.inventoryhud-.armor": "Armor: %s",
   "button.inventoryhud-.cooldown": "Cooldown: %s",
   "button.inventoryhud-.potions": "Potions: %s",
-  "button.inventoryhud-.totem": "Totems: %s"
+  "button.inventoryhud-.totem": "Totem: %s"
 }

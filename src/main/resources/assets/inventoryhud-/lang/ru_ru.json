@@ -5,5 +5,5 @@
   "button.inventoryhud-.armor": "Броня: %s",
   "button.inventoryhud-.cooldown": "Перезарядка: %s",
   "button.inventoryhud-.potions": "Зелья: %s",
-  "button.inventoryhud-.totem": "Тотемы: %s"
+  "button.inventoryhud-.totem": "Тотем: %s"
 }

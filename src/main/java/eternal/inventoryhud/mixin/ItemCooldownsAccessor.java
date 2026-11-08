@@ -1,4 +1,4 @@
-package eternal.inventoryhud.mixin.item;
+package eternal.inventoryhud.mixin;
 
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.ItemCooldowns;
@@ -16,3 +16,4 @@ public interface ItemCooldownsAccessor {
     @Accessor("tickCount")
     int tickCount();
 }
+
