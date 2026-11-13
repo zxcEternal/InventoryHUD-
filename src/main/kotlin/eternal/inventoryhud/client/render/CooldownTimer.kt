@@ -8,7 +8,7 @@ import net.minecraft.world.item.ItemStack
 import java.util.*
 import kotlin.math.ceil
 
-object Cooldown : IMinecraft {
+object CooldownTimer : IMinecraft {
 
     @JvmStatic
     fun extract(graphics: GuiGraphicsExtractor, itemStack: ItemStack, x: Int, y: Int) {

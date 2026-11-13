@@ -8,7 +8,7 @@ import net.minecraft.world.entity.HumanoidArm
 import net.minecraft.world.item.ItemStack
 import net.minecraft.world.item.Items
 
-object Totem : IMinecraft {
+object TotemCounter : IMinecraft {
 
     private val HOTBAR_OFFHAND_LEFT_SPRITE = Identifier.withDefaultNamespace("hud/hotbar_offhand_left")
     private val HOTBAR_OFFHAND_RIGHT_SPRITE = Identifier.withDefaultNamespace("hud/hotbar_offhand_right")

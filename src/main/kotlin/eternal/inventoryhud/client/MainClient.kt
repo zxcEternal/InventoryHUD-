@@ -9,21 +9,26 @@ import net.minecraft.resources.Identifier
 
 class MainClient : ClientModInitializer {
 
-    override fun onInitializeClient() {
-        config = Configurable()
-        config.init()
-
-        val category = KeyMapping.Category(Identifier.fromNamespaceAndPath("inventoryhud-", "main"))
-        openConfigKey = KeyMappingHelper.registerKeyMapping(KeyMapping("key.inventoryhud-.open_config", InputConstants.Type.KEYBOARD, InputConstants.KEY_H, category))
-
-        ClientTickEvents.END_CLIENT_TICK.register(ClientTickEvents.EndTick { client ->
-            while (openConfigKey.consumeClick()) client.setScreenAndShow(HudMenu(null, config))
-        })
+    companion object {
+        lateinit var instance: MainClient private set
     }
 
-    companion object {
-        @JvmStatic
-        lateinit var config: Configurable
-        private lateinit var openConfigKey: KeyMapping
+    lateinit var configurable: Configurable
+    lateinit var menu: Menu
+    lateinit var key: KeyMapping
+
+    override fun onInitializeClient() {
+        instance = this
+
+        this.configurable = Configurable()
+        this.menu = Menu(null, this.configurable)
+        this.key = KeyMappingHelper.registerKeyMapping(
+            KeyMapping("key.inventoryhud-.open_config", InputConstants.Type.KEYBOARD, InputConstants.KEY_H,
+            KeyMapping.Category(Identifier.fromNamespaceAndPath("inventoryhud-", "main")))
+        )
+
+        ClientTickEvents.END_CLIENT_TICK.register(ClientTickEvents.EndTick { client ->
+            while (key.consumeClick()) client.setScreenAndShow(menu)
+        })
     }
 }

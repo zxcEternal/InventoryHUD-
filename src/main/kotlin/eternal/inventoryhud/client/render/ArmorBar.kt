@@ -11,7 +11,7 @@ import net.minecraft.world.entity.HumanoidArm
 import net.minecraft.world.entity.player.Player
 import net.minecraft.world.item.ItemStack
 
-object Armor : IMinecraft {
+object ArmorBar : IMinecraft {
 
     private val HOTBAR_SPRITE = Identifier.withDefaultNamespace("hud/hotbar")
     private val ARMOR_SLOTS = arrayOf(EquipmentSlot.HEAD, EquipmentSlot.CHEST, EquipmentSlot.LEGS, EquipmentSlot.FEET)
@@ -44,7 +44,7 @@ object Armor : IMinecraft {
 
     private fun hotbarX(mainArm: HumanoidArm): Int {
         val screenCenter = client.window.guiScaledWidth / 2
-        val totemWidth = if (MainClient.config.isTotemEnabled) 29 else 0
+        val totemWidth = if (MainClient.instance.configurable.isTotemCounterEnabled) 29 else 0
         return if (mainArm == HumanoidArm.RIGHT) screenCenter + 98 + totemWidth else screenCenter - 180 - totemWidth
     }
 

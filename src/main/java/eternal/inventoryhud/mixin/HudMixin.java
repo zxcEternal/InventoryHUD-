@@ -1,9 +1,9 @@
 package eternal.inventoryhud.mixin;
 
 import eternal.inventoryhud.client.MainClient;
-import eternal.inventoryhud.client.render.Armor;
-import eternal.inventoryhud.client.render.Potion;
-import eternal.inventoryhud.client.render.Totem;
+import eternal.inventoryhud.client.render.ArmorBar;
+import eternal.inventoryhud.client.render.PotionTimer;
+import eternal.inventoryhud.client.render.TotemCounter;
 import net.minecraft.client.DeltaTracker;
 import net.minecraft.client.gui.GuiGraphicsExtractor;
 import net.minecraft.client.gui.Hud;
@@ -33,26 +33,26 @@ public abstract class HudMixin {
 
     @Inject(method = "extractItemHotbar", at = @At("TAIL"))
     private void extractItemHotbar(GuiGraphicsExtractor graphics, DeltaTracker deltaTracker, CallbackInfo ci) {
-        if (MainClient.config.isArmorEnabled()) Armor.extract(graphics, deltaTracker, this::extractSlot);
-        if (MainClient.config.isTotemEnabled()) Totem.extract(graphics);
+        if (MainClient.Companion.getInstance().configurable.isArmorBarEnabled()) ArmorBar.extract(graphics, deltaTracker, this::extractSlot);
+        if (MainClient.Companion.getInstance().configurable.isTotemCounterEnabled()) TotemCounter.extract(graphics);
     }
 
     @Inject(method = "extractEffects", at = @At("HEAD"), cancellable = true)
     private void extractEffects(GuiGraphicsExtractor graphics, DeltaTracker deltaTracker, CallbackInfo ci) {
-        if (MainClient.config.isPotionEnabled()) {
+        if (MainClient.Companion.getInstance().configurable.isPotionTimerEnabled()) {
             ci.cancel();
-            Potion.extract(graphics);
+            PotionTimer.extract(graphics);
         }
     }
 
     @ModifyArgs(method = "extractItemHotbar", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/GuiGraphicsExtractor;blitSprite(Lcom/mojang/renderpearl/api/pipeline/RenderPipeline;Lnet/minecraft/resources/Identifier;IIII)V"))
     private void modifyAttackIndicatorBackgroundX(Args args) {
-        if (HOTBAR_ATTACK_INDICATOR_BACKGROUND_SPRITE.equals(args.get(1))) args.set(2, Armor.attackIndicatorX(args.get(2)));
+        if (HOTBAR_ATTACK_INDICATOR_BACKGROUND_SPRITE.equals(args.get(1))) args.set(2, ArmorBar.attackIndicatorX(args.get(2)));
     }
 
     @ModifyArgs(method = "extractItemHotbar", at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/GuiGraphicsExtractor;blitSprite(Lcom/mojang/renderpearl/api/pipeline/RenderPipeline;Lnet/minecraft/resources/Identifier;IIIIIIII)V"))
     private void modifyAttackIndicatorProgressX(Args args) {
-        if (HOTBAR_ATTACK_INDICATOR_PROGRESS_SPRITE.equals(args.get(1))) args.set(6, Armor.attackIndicatorX(args.get(6)));
+        if (HOTBAR_ATTACK_INDICATOR_PROGRESS_SPRITE.equals(args.get(1))) args.set(6, ArmorBar.attackIndicatorX(args.get(6)));
     }
 }
 
