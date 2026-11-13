@@ -15,6 +15,9 @@
     ],
     "main": [
       "eternal.inventoryhud.Main"
+    ],
+    "modmenu": [
+      "eternal.inventoryhud.client.config.ModMenuIntegration"
     ]
   },
   "mixins": [
@@ -25,5 +28,13 @@
     "fabric-language-kotlin": ">=${kotlin_loader_version}",
     "fabric-api": "*",
     "minecraft": "${minecraft_version}"
+  },
+  "suggests": {
+    "modmenu": "*"
+  },
+  "custom": {
+    "modmenu": {
+      "badges": []
+    }
   }
 }

@@ -1,9 +1,7 @@
 {
-  "key.category.inventoryhud-.main": "InventoryHUD-",
-  "key.inventoryhud-.open_config": "Open InventoryHUD- settings",
-  "screen.inventoryhud-.config": "InventoryHUD- settings",
-  "button.inventoryhud-.armor_bar": "Armor bar: %s",
-  "button.inventoryhud-.cooldown_timer": "Cooldown timer: %s",
-  "button.inventoryhud-.potion_timer": "Potion timer: %s",
-  "button.inventoryhud-.totem_counter": "Totem counter: %s"
+  "inventoryhud-.config.title": "InventoryHUD- Options",
+  "inventoryhud-.config.armor_bar": "Armor bar",
+  "inventoryhud-.config.cooldown_timer": "Cooldown timer",
+  "inventoryhud-.config.potion_timer": "Potion timer",
+  "inventoryhud-.config.totem_counter": "Totem counter"
 }

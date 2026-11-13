@@ -1,9 +1,7 @@
 {
-  "key.category.inventoryhud-.main": "InventoryHUD-",
-  "key.inventoryhud-.open_config": "Открыть настройки InventoryHUD-",
-  "screen.inventoryhud-.config": "Настройки InventoryHUD-",
-  "button.inventoryhud-.armor_bar": "Полоса брони: %s",
-  "button.inventoryhud-.cooldown_timer": "Таймер перезарядки: %s",
-  "button.inventoryhud-.potion_timer": "Таймер зелий: %s",
-  "button.inventoryhud-.totem_counter": "Счётчик тотемов: %s"
+  "inventoryhud-.config.title": "Настройки InventoryHUD-",
+  "inventoryhud-.config.armor_bar": "Полоса брони",
+  "inventoryhud-.config.cooldown_timer": "Таймер перезарядки",
+  "inventoryhud-.config.potion_timer": "Таймер эффектов",
+  "inventoryhud-.config.totem_counter": "Счётчик тотемов"
 }

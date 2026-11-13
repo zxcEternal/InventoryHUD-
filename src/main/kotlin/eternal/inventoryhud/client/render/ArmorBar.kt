@@ -1,7 +1,7 @@
 package eternal.inventoryhud.client.render
 
 import eternal.inventoryhud.client.IMinecraft
-import eternal.inventoryhud.client.MainClient
+import eternal.inventoryhud.client.config.Config
 import net.minecraft.client.DeltaTracker
 import net.minecraft.client.gui.GuiGraphicsExtractor
 import net.minecraft.client.renderer.RenderPipelines
@@ -44,7 +44,7 @@ object ArmorBar : IMinecraft {
 
     private fun hotbarX(mainArm: HumanoidArm): Int {
         val screenCenter = client.window.guiScaledWidth / 2
-        val totemWidth = if (MainClient.instance.configurable.isTotemCounterEnabled) 29 else 0
+        val totemWidth = if (Config.totemCounter) 29 else 0
         return if (mainArm == HumanoidArm.RIGHT) screenCenter + 98 + totemWidth else screenCenter - 180 - totemWidth
     }
 
