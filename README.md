@@ -11,6 +11,11 @@ A client-side Fabric mod for Minecraft: Java Edition, written in Kotlin. It adds
 | **Potion timer** | Active effects in the top-right corner: icon, level, and remaining time in `mm:ss` format (`**:**` for infinite effects) |
 | **Totem counter** | The number of Totems of Undying in your inventory and off hand, shown in a separate slot next to the hotbar |
 
+## Configuration
+
+HUD elements can be toggled through Mod Menu. Settings are stored in Minecraft's
+`options.txt` with the `inventoryhud.` prefix.
+
 ## Requirements
 
 | Component | Version |

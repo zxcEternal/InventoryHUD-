@@ -14,6 +14,10 @@ base {
     archivesName.set(project.property("archives_base_name") as String)
 }
 
+loom {
+    accessWidenerPath.set(file("src/main/resources/inventoryhud-.accesswidener"))
+}
+
 val targetJavaVersion = 25
 java {
     toolchain.languageVersion = JavaLanguageVersion.of(targetJavaVersion)

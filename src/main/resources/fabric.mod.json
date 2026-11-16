@@ -9,6 +9,7 @@
   "license": "All-Rights-Reserved",
   "icon": "assets/inventoryhud-/icon.png",
   "environment": "client",
+  "accessWidener": "inventoryhud-.accesswidener",
   "entrypoints": {
     "client": [
       "eternal.inventoryhud.client.MainClient"
