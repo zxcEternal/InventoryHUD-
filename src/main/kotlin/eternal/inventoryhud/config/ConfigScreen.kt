@@ -1,4 +1,4 @@
-package eternal.inventoryhud.client.config
+package eternal.inventoryhud.config
 
 import net.minecraft.client.gui.components.Button
 import net.minecraft.client.gui.components.Checkbox
@@ -6,17 +6,17 @@ import net.minecraft.client.gui.components.StringWidget
 import net.minecraft.client.gui.screens.Screen
 import net.minecraft.network.chat.Component
 
-class ConfigScreen(private val parent: Screen) : Screen(Component.translatable("inventoryhud-.config.title")) {
+class ConfigScreen(private val parent: Screen) :
+    Screen(Component.translatable("inventoryhud-.config.title")) {
 
     override fun init() {
+
         val center = width / 2
         val left = center - 100
         val top = height / 2 - 80
 
         addRenderableWidget(
-            StringWidget(title, font).apply {
-                setPosition(center - width / 2, top - 24)
-            }
+            StringWidget(title, font).apply { setPosition(center - width / 2, top - 24) }
         )
 
         addRenderableWidget(

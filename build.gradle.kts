@@ -5,23 +5,40 @@ plugins {
     kotlin("jvm") version "2.4.21"
     id("net.fabricmc.fabric-loom") version "1.19-SNAPSHOT"
     id("maven-publish")
+    id("com.diffplug.spotless") version "6.25.0"
 }
 
 version = project.property("mod_version") as String
+
 group = project.property("maven_group") as String
 
-base {
-    archivesName.set(project.property("archives_base_name") as String)
-}
+base { archivesName.set(project.property("archives_base_name") as String) }
 
-loom {
-    accessWidenerPath.set(file("src/main/resources/inventoryhud-.accesswidener"))
-}
+loom { accessWidenerPath.set(file("src/main/resources/inventoryhud-.accesswidener")) }
 
 val targetJavaVersion = 25
+
 java {
     toolchain.languageVersion = JavaLanguageVersion.of(targetJavaVersion)
     withSourcesJar()
+}
+
+spotless {
+    kotlin {
+        ktfmt().kotlinlangStyle()
+        target("src/*/kotlin/**/*.kt")
+    }
+
+    kotlinGradle {
+        ktfmt().kotlinlangStyle()
+        target("*.kts")
+    }
+
+    java {
+        eclipse()
+            .withP2Mirrors(mapOf("https://download.eclipse.org/" to "https://archive.eclipse.org/"))
+        target("src/*/java/**/*.java")
+    }
 }
 
 repositories {
@@ -34,7 +51,9 @@ repositories {
 dependencies {
     minecraft("com.mojang:minecraft:${project.property("minecraft_version")}")
     implementation("net.fabricmc:fabric-loader:${project.property("loader_version")}")
-    implementation("net.fabricmc:fabric-language-kotlin:${project.property("kotlin_loader_version")}")
+    implementation(
+        "net.fabricmc:fabric-language-kotlin:${project.property("kotlin_loader_version")}"
+    )
     implementation("net.fabricmc.fabric-api:fabric-api:${project.property("fabric_version")}")
     implementation("com.terraformersmc:modmenu:${project.property("modmenu_version")}")
 }
@@ -64,11 +83,7 @@ tasks.withType<KotlinCompile>().configureEach {
     compilerOptions.jvmTarget.set(JvmTarget.fromTarget(targetJavaVersion.toString()))
 }
 
-tasks.jar {
-    from("LICENSE") {
-        rename { "${it}_${project.base.archivesName.get()}" }
-    }
-}
+tasks.jar { from("LICENSE") { rename { "${it}_${project.base.archivesName.get()}" } } }
 
 publishing {
     publications {
@@ -78,6 +93,5 @@ publishing {
         }
     }
 
-    repositories {
-    }
+    repositories {}
 }

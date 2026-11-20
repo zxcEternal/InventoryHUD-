@@ -12,13 +12,10 @@
   "accessWidener": "inventoryhud-.accesswidener",
   "entrypoints": {
     "client": [
-      "eternal.inventoryhud.client.MainClient"
-    ],
-    "main": [
-      "eternal.inventoryhud.Main"
+      "eternal.inventoryhud.ClientMain"
     ],
     "modmenu": [
-      "eternal.inventoryhud.client.config.ModMenuIntegration"
+      "eternal.inventoryhud.config.ModMenuIntegration"
     ]
   },
   "mixins": [
@@ -35,7 +32,8 @@
   },
   "custom": {
     "modmenu": {
-      "badges": []
+      "badges": [
+      ]
     }
   }
 }

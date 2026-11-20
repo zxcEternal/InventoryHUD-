@@ -10,10 +10,9 @@ import java.util.Map;
 @Mixin(ItemCooldowns.class)
 public interface ItemCooldownsAccessor {
 
-    @Accessor("cooldowns")
-    Map<Identifier, ?> cooldowns();
+	@Accessor("cooldowns")
+	Map<Identifier, ?> cooldowns();
 
-    @Accessor("tickCount")
-    int tickCount();
+	@Accessor("tickCount")
+	int tickCount();
 }
-

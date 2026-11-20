@@ -1,4 +1,4 @@
-package eternal.inventoryhud.client.config
+package eternal.inventoryhud.config
 
 import com.terraformersmc.modmenu.api.ConfigScreenFactory
 import com.terraformersmc.modmenu.api.ModMenuApi

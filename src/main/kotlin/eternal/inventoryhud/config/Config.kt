@@ -1,4 +1,4 @@
-package eternal.inventoryhud.client.config
+package eternal.inventoryhud.config
 
 import net.minecraft.client.Minecraft
 import net.minecraft.client.Options
